@@ -10,7 +10,7 @@ class ReceiptModel extends ChangeNotifier {
   /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
   /// cart from the outside.
   void add(Item item) {
-    listKey.currentState
+    listKey.currentState!
         .insertItem(0, duration: const Duration(milliseconds: 500));
     items.add(item);
     // This call tells the widgets that are listening to this model to rebuild.
@@ -20,7 +20,7 @@ class ReceiptModel extends ChangeNotifier {
   /// Removes all items from the cart.
   void removeAll() {
     for (var i = 0; i <= items.length - 1; i++) {
-      listKey.currentState.removeItem(0,
+      listKey.currentState!.removeItem(0,
           (BuildContext context, Animation<double> animation) {
         return Container();
       });
@@ -34,9 +34,9 @@ class ReceiptModel extends ChangeNotifier {
 
 class Item {
   Item({
-    @required this.id,
-    @required this.name,
-    @required this.price,
+    required this.id,
+    required this.name,
+    required this.price,
 
   });
 

@@ -29,8 +29,7 @@ class _DummyScannerScreenState extends State<DummyScannerScreen> {
       child: Container(
         color: Colors.white,
         child: Center(
-          child: FlatButton(
-            color: Colors.white,
+          child: TextButton(
             onPressed: (){
             scannerHelper
                       .register(Item(id: rng.nextInt(10).toString(), name: rng.nextInt(10).toString(), price: 2));

@@ -8,7 +8,8 @@ import 'receipt_overlay/receipt_overlay_screen.dart';
 import 'scanner/scanner_screen.dart';
 
 class ScannerPage extends StatelessWidget {
-  const ScannerPage({Key key}) : super(key: key);
+  const ScannerPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {

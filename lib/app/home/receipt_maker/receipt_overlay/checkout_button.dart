@@ -10,8 +10,7 @@ class CheckoutButton extends StatelessWidget {
     return SizedBox(
       height: screenHeight * 0.1,
       width: double.infinity,
-      child: FlatButton(
-        color: Colors.black,
+      child: TextButton(
         onPressed: () {
           var receipt = context.read<ReceiptModel>();
           receipt.removeAll();

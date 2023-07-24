@@ -3,28 +3,28 @@ import 'package:flutter/widgets.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScannerModel extends ChangeNotifier {
-  QRViewController controller;
+  QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
 
   void pause(){
-    controller.pauseCamera();
+    controller!.pauseCamera();
     notifyListeners();
   }
 
   
   void resume(){
-    controller.resumeCamera();
+    controller!.resumeCamera();
   }
 
   void flipCamera(){
-    controller.flipCamera();
+    controller!.flipCamera();
     notifyListeners();
   }
 
 
   void toggleFlash(){
-    controller.toggleFlash();
+    controller!.toggleFlash();
     notifyListeners();
   }
 }

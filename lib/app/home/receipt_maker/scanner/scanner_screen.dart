@@ -27,7 +27,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         child: QRView(
           key: Provider.of<ScannerModel>(context, listen: false).qrKey,
           overlay:
-              RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
+              QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 10),
           onQRViewCreated: (QRViewController controller) {
             controller.scannedDataStream.listen(
               (scanData) {
