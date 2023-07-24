@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:cashier/app/home/receipt_maker/receipt_maker_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const ProviderScope(child: MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
