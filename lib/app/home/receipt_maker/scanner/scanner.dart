@@ -17,11 +17,7 @@ class Scanner extends ConsumerWidget {
         final List<Barcode> barcodes = capture.barcodes;
         if (barcodes.isEmpty) return;
         log(barcodes.first.displayValue!, name: "Barcode");
-        ref.read(productsProvider.notifier).add(Product(
-              name: barcodes.first.displayValue!,
-              price: 0,
-              quantity: 1,
-            ));
+        ref.read(productsProvider.notifier).add(barcodes.first.displayValue!);
       },
     );
   }

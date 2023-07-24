@@ -16,6 +16,7 @@ class ReceiptOverlay extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productsProvider);
     final cameraController = ref.watch(scannerControllerProvider);
+    final isLoading = ref.watch(isLoadingProvider);
 
     return SlidingUpPanel(
       controller: panelController,
@@ -58,34 +59,57 @@ class ReceiptOverlay extends ConsumerWidget {
           ),
         );
       },
-      body: products.isEmpty
-          ? null
-          : Align(
+      body: isLoading
+          ? Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 200,
-                  child: InkWell(
-                    onTap: () {
-                      panelController.open();
-                    },
-                    child: Container(
-                      decoration: ShapeDecoration(
-                        shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(75)),
-                        ),
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                  width: double.infinity,
+                  child: Container(
+                    decoration: ShapeDecoration(
+                      shape: const ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(75)),
                       ),
-                      child: AnimatedListItem(
-                        product: Product(
-                            name: 'Scan a product', price: 0, quantity: 1),
-                      ),
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                    ),
+                    child: const Center(
+                      child: CircularProgressIndicator(),
                     ),
                   ),
                 ),
               ),
-            ),
+            )
+          : products.isEmpty
+              ? null
+              : Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      height: 200,
+                      child: InkWell(
+                        onTap: () {
+                          panelController.open();
+                        },
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            shape: const ContinuousRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(75)),
+                            ),
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                          child: AnimatedListItem(
+                            product: products.first,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
     );
   }
 }

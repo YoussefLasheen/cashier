@@ -12,6 +12,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
   sliding_up_panel: ^2.0.0+1
   mobile_scanner: ^3.3.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
