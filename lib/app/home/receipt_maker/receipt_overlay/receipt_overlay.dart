@@ -27,9 +27,13 @@ class ReceiptOverlay extends ConsumerWidget {
         cameraController.stop();
       },
       defaultPanelState: PanelState.CLOSED,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
       minHeight: 0,
       maxHeight: MediaQuery.of(context).size.height,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(25),
+        topRight: Radius.circular(25),
+      ),
       panelBuilder: (ScrollController scrollController) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
@@ -50,6 +54,7 @@ class ReceiptOverlay extends ConsumerWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Card(
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   child: AnimatedListItem(
                     product: products[index],
                   ),
@@ -64,19 +69,16 @@ class ReceiptOverlay extends ConsumerWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
+                child: Container(
                   height: 200,
-                  width: double.infinity,
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      shape: const ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(75)),
-                      ),
-                      color: Theme.of(context).colorScheme.primaryContainer,
+                  decoration: ShapeDecoration(
+                    shape: const ContinuousRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(75)),
                     ),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: const Center(
+                    child: CircularProgressIndicator(),
                   ),
                 ),
               ),
@@ -87,23 +89,22 @@ class ReceiptOverlay extends ConsumerWidget {
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      height: 200,
-                      child: InkWell(
-                        onTap: () {
-                          panelController.open();
-                        },
-                        child: Container(
-                          decoration: ShapeDecoration(
-                            shape: const ContinuousRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(75)),
-                            ),
-                            color:
-                                Theme.of(context).colorScheme.primaryContainer,
+                    child: GestureDetector(
+                      onTap: () {
+                        panelController.open();
+                      },
+                      child: Container(
+                        height: 200,
+                        decoration: ShapeDecoration(
+                          shape: const ContinuousRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(75)),
                           ),
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                        child: Center(
                           child: AnimatedListItem(
                             product: products.first,
+                            isMain: true,
                           ),
                         ),
                       ),
