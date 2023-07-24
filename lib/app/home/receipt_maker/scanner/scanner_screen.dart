@@ -1,43 +1,28 @@
+import 'dart:developer';
+
 import 'package:cashier/app/home/models/receipt.dart';
 import 'package:cashier/app/home/models/scanner.dart';
-import 'package:cashier/app/home/receipt_maker/scanner/scanner_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
-class ScannerScreen extends StatefulWidget {
-  @override
-  _ScannerScreenState createState() => _ScannerScreenState();
-}
-
-class _ScannerScreenState extends State<ScannerScreen> {
-  ScannerHelper scannerHelper = new ScannerHelper();
+class ScannerScreen extends ConsumerWidget {
+  const ScannerScreen({super.key});
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    scannerHelper.valueThatComesFromAProvider =
-        Provider.of<ReceiptModel>(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Center(
-        child: QRView(
-          key: Provider.of<ScannerModel>(context, listen: false).qrKey,
-          overlay:
-              QrScannerOverlayShape(borderColor: Colors.red, borderRadius: 10),
-          onQRViewCreated: (QRViewController controller) {
-            controller.scannedDataStream.listen(
-              (scanData) {
-                scannerHelper
-                    .register(Item(id: '$scanData', name: '', price: 2));
-              },
-            );
-          },
-        ),
-      ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MobileScanner(
+      controller: ref.watch(scannerControllerProvider),
+      onDetect: (capture) {
+        final List<Barcode> barcodes = capture.barcodes;
+        if (barcodes.isEmpty) return;
+        log(barcodes.first.displayValue!, name: "Barcode");
+        ref.read(productsProvider.notifier).add(Product(
+              name: barcodes.first.displayValue!,
+              price: 0,
+              quantity: 1,
+            ));
+      },
     );
   }
 }

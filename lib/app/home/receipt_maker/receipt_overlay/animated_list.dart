@@ -1,4 +1,5 @@
 import 'package:cashier/app/home/models/receipt.dart';
+import 'package:cashier/app/home/models/scanner.dart';
 import 'package:cashier/app/home/receipt_maker/receipt_overlay/checkout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,15 +15,16 @@ class SimpleAnimatedList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productsProvider);
+    final cameraController = ref.watch(scannerControllerProvider);
 
     return SlidingUpPanel(
       controller: panelController,
-      // onPanelClosed: () {
-      //   context.read<ScannerModel>().resume();
-      // },
-      // onPanelOpened: () {
-      //   context.read<ScannerModel>().pause();
-      // },
+      onPanelClosed: () {
+        cameraController.start();
+      },
+      onPanelOpened: () {
+        cameraController.stop();
+      },
       defaultPanelState: PanelState.CLOSED,
       color: Colors.white,
       minHeight: 0,
@@ -56,31 +58,34 @@ class SimpleAnimatedList extends ConsumerWidget {
           ),
         );
       },
-      body: Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 200,
-            child: InkWell(
-              onTap: () {
-                panelController.open();
-              },
-              child: Container(
-                decoration: ShapeDecoration(
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(75)),
+      body: products.isEmpty
+          ? null
+          : Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 200,
+                  child: InkWell(
+                    onTap: () {
+                      panelController.open();
+                    },
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        shape: ContinuousRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(75)),
+                        ),
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                      child: AnimatedListItem(
+                        product: Product(
+                            name: 'Scan a product', price: 0, quantity: 1),
+                      ),
+                    ),
                   ),
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                child: AnimatedListItem(
-                  product: Product("Product", 10.0, 1),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
