@@ -9,8 +9,8 @@ import 'animated_list_item.dart';
 
 final PanelController panelController = PanelController();
 
-class SimpleAnimatedList extends ConsumerWidget {
-  const SimpleAnimatedList({super.key});
+class ReceiptOverlay extends ConsumerWidget {
+  const ReceiptOverlay({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

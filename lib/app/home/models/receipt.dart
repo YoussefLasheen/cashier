@@ -5,7 +5,7 @@ class Product {
   final double price;
   final int quantity;
 
-  Product(this.name, this.price, this.quantity);
+  Product({required this.name, required this.price, this.quantity = 1});
 }
 
 class ProductsNotifier extends Notifier<List<Product>> {

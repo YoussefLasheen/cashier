@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class ScannerScreen extends ConsumerWidget {
-  const ScannerScreen({super.key});
+class Scanner extends ConsumerWidget {
+  const Scanner({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
