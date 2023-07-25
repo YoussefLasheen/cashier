@@ -1,3 +1,4 @@
+import 'package:cashier/app/constants.dart';
 import 'package:cashier/app/home/models/receipt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,8 +89,8 @@ class AnimatedListItem extends ConsumerWidget {
                   fillColor: Theme.of(context).colorScheme.surface,
                   filled: true,
                 ),
-                min: 1,
-                max: 9,
+                min: 0,
+                max: maxQuantity.toDouble(),
                 value: product.quantity.toDouble(),
                 onChanged: (value) {
                   ref.watch(productsProvider.notifier).updateQuantity(
