@@ -15,7 +15,7 @@ class ApiService {
     if (response.statusCode == 200 &&
         json.decode(response.body)['data']['skuSearch'] != null) {
       Product model =
-          Product.fromMap(json.decode(response.body)['data']['skuSearch']);
+          Product.fromMap(json.decode(response.body)['data']['skuSearch'], sku);
       return model;
     } else {
       throw Exception('Failed to find product');
