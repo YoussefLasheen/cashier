@@ -47,8 +47,38 @@ class ReceiptOverlay extends ConsumerWidget {
             ),
             itemBuilder: (context, index) {
               if (index == products.length) {
-                return const CheckoutButton(
-                  onPressed: null,
+                return Column(
+                  children: [
+                    Table(
+                      children: [
+                        TableRow(
+                          children: [
+                            const Text(
+                              "Total",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 20,
+                              ),
+                            ),
+                            Text(
+                              "${ref.watch(productsProvider.notifier).calculateTotal()}EGP",
+                              textAlign: TextAlign.end,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w300,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const CheckoutButton(
+                      onPressed: null,
+                    ),
+                  ],
                 );
               }
               return Padding(

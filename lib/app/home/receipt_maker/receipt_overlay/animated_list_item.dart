@@ -1,8 +1,9 @@
 import 'package:cashier/app/home/models/receipt.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 
-class AnimatedListItem extends StatelessWidget {
+class AnimatedListItem extends ConsumerWidget {
   final Product product;
   final bool isMain;
   const AnimatedListItem({
@@ -12,7 +13,7 @@ class AnimatedListItem extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: ListTile(
@@ -58,9 +59,15 @@ class AnimatedListItem extends StatelessWidget {
                   contentPadding: EdgeInsets.all(0),
                 ),
                 spacing: 0,
-                min: 1,
+                min: 0,
                 max: 9,
                 value: 1,
+                onChanged: (value) {
+                  ref.watch(productsProvider.notifier).updateQuantity(
+                        product.sku,
+                        value.toInt(),
+                      );
+                },
               ),
             ),
             SizedBox(

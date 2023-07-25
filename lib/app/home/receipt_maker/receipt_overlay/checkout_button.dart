@@ -9,6 +9,12 @@ class CheckoutButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        minimumSize: Size.fromHeight(50),
+      ),
       onPressed: onPressed,
       child: const Padding(
         padding: EdgeInsets.all(8.0),

@@ -27,6 +27,16 @@ class Product {
       brand: Brand.fromMap(map['brand']),
     );
   }
+  Product copyWithQuantity(int? quantity) {
+    return Product(
+      name: name,
+      sku: sku,
+      imageUrl: imageUrl,
+      price: price,
+      brand: brand,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 }
 
 class Brand {
@@ -57,6 +67,31 @@ class ProductsNotifier extends Notifier<List<Product>> {
     }).catchError((e) {
       ref.read(isLoadingProvider.notifier).state = false;
     });
+  }
+
+  void remove(String sku) {
+    state = state.where((product) => product.sku != sku).toList();
+  }
+
+  void updateQuantity(String sku, int quantity) {
+    if (quantity == 0) {
+      remove(sku);
+      return;
+    }
+    state = state.map((product) {
+      if (product.sku == sku) {
+        return product.copyWithQuantity(quantity);
+      }
+      return product;
+    }).toList();
+  }
+
+  double calculateTotal() {
+    double total = 0;
+    for (var product in state) {
+      total += product.price * product.quantity;
+    }
+    return total;
   }
 }
 
