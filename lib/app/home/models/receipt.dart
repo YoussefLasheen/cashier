@@ -1,4 +1,5 @@
 import 'package:cashier/api_service.dart';
+import 'package:cashier/app/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Product {
@@ -18,10 +19,10 @@ class Product {
     this.quantity = 1,
   });
 
-  factory Product.fromMap(Map<String, dynamic> map) {
+  factory Product.fromMap(Map<String, dynamic> map, String sku) {
     return Product(
       name: map['name'],
-      sku: map['sku'],
+      sku: sku,
       imageUrl: map['image']['url'],
       price: map['price']['regularPrice']['amount']['value'],
       brand: Brand.fromMap(map['brand']),
@@ -60,9 +61,20 @@ class ProductsNotifier extends Notifier<List<Product>> {
   }
 
   Future<void> add(String sku) async {
+    //Check if already added
+    if (state.any((product) => product.sku == sku)) {
+      updateQuantity(
+          sku, state.firstWhere((product) => product.sku == sku).quantity + 1);
+      //Move it to top of the list
+      state = [
+        state.firstWhere((product) => product.sku == sku),
+        ...state.where((product) => product.sku != sku).toList()
+      ];
+      return;
+    }
     ref.read(isLoadingProvider.notifier).state = true;
     await ApiService().getProductBySku(sku).then((product) {
-      state = [...state, product];
+      state = [product, ...state];
       ref.read(isLoadingProvider.notifier).state = false;
     }).catchError((e) {
       ref.read(isLoadingProvider.notifier).state = false;
@@ -78,6 +90,8 @@ class ProductsNotifier extends Notifier<List<Product>> {
       remove(sku);
       return;
     }
+
+    if (quantity > maxQuantity) return;
     state = state.map((product) {
       if (product.sku == sku) {
         return product.copyWithQuantity(quantity);
