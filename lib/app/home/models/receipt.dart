@@ -28,6 +28,17 @@ class Product {
       brand: Brand.fromMap(map['brand']),
     );
   }
+  Map toJson() {
+    return {
+      'name': name,
+      'sku': sku,
+      'imageUrl': imageUrl,
+      'price': price,
+      'brand': brand,
+      'quantity': quantity,
+    };
+  }
+
   Product copyWithQuantity(int? quantity) {
     return Product(
       name: name,
@@ -106,6 +117,10 @@ class ProductsNotifier extends Notifier<List<Product>> {
       total += product.price * product.quantity;
     }
     return total;
+  }
+
+  void clear() {
+    state = [];
   }
 }
 

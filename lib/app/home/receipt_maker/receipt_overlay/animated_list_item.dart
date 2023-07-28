@@ -7,9 +7,11 @@ import 'package:flutter_spinbox/flutter_spinbox.dart';
 class AnimatedListItem extends ConsumerWidget {
   final Product product;
   final bool isMain;
+  final bool isEditable;
   const AnimatedListItem({
     super.key,
     required this.product,
+    this.isEditable = true,
     this.isMain = false,
   });
 
@@ -63,44 +65,45 @@ class AnimatedListItem extends ConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: SizedBox(
-              height: 40,
-              width: 125,
-              child: SpinBox(
-                spacing: 0,
-                iconSize: 20,
-                showCursor: false,
-                decrementIcon: product.quantity == 1
-                    ? const Icon(
-                        Icons.delete,
-                      )
-                    : null,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(25),
+          if (isEditable)
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: SizedBox(
+                height: 40,
+                width: 125,
+                child: SpinBox(
+                  spacing: 0,
+                  iconSize: 20,
+                  showCursor: false,
+                  decrementIcon: product.quantity == 1
+                      ? const Icon(
+                          Icons.delete,
+                        )
+                      : null,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
                     ),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.all(15),
+                    isCollapsed: true,
+                    fillColor: Theme.of(context).colorScheme.surface,
+                    filled: true,
                   ),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.all(15),
-                  isCollapsed: true,
-                  fillColor: Theme.of(context).colorScheme.surface,
-                  filled: true,
+                  min: 0,
+                  max: maxQuantity.toDouble(),
+                  value: product.quantity.toDouble(),
+                  onChanged: (value) {
+                    ref.watch(productsProvider.notifier).updateQuantity(
+                          product.sku,
+                          value.toInt(),
+                        );
+                  },
                 ),
-                min: 0,
-                max: maxQuantity.toDouble(),
-                value: product.quantity.toDouble(),
-                onChanged: (value) {
-                  ref.watch(productsProvider.notifier).updateQuantity(
-                        product.sku,
-                        value.toInt(),
-                      );
-                },
               ),
             ),
-          ),
         ],
       ),
     );

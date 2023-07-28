@@ -1,4 +1,5 @@
 import 'package:cashier/app/home/models/receipt.dart';
+import 'package:cashier/app/home/models/receipts.dart';
 import 'package:cashier/app/home/models/scanner.dart';
 import 'package:cashier/app/home/receipt_maker/receipt_overlay/checkout_button.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +72,20 @@ class ReceiptOverlay extends ConsumerWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const CheckoutButton(
-                      onPressed: null,
+                    CheckoutButton(
+                      onPressed: () {
+                        ref.read(receiptsProvider.notifier).add(
+                              Receipt(
+                                createdOn: DateTime.now(),
+                                products: products,
+                                total: ref
+                                    .watch(productsProvider.notifier)
+                                    .calculateTotal(),
+                              ),
+                            );
+                        ref.read(productsProvider.notifier).clear();
+                        Navigator.pop(context);
+                      },
                     ),
                   ],
                 );
