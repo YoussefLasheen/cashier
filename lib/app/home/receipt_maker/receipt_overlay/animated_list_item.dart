@@ -103,6 +103,17 @@ class AnimatedListItem extends ConsumerWidget {
                   },
                 ),
               ),
+            )
+          else
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                'Quantity: ${product.quantity}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 16,
+                ),
+              ),
             ),
         ],
       ),
