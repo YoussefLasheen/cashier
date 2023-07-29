@@ -16,6 +16,7 @@ dependencies:
   flutter_spinbox: ^0.13.1
   shared_preferences: ^2.2.0
   audioplayers: ^4.1.0
+  scanning_effect: ^1.0.4
 
 dev_dependencies:
   flutter_test:
