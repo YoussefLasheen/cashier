@@ -141,11 +141,25 @@ class ReceiptOverlay extends ConsumerWidget {
                                   BorderRadius.all(Radius.circular(85)),
                             ),
                             color: Colors.white),
-                        child: Center(
-                          child: AnimatedListItem(
-                            product: products.first,
-                            isMain: true,
-                          ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Divider(
+                              color: Theme.of(context).colorScheme.primary,
+                              thickness: 3,
+                              indent: 125,
+                              endIndent: 125,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            AnimatedListItem(
+                              product: products.first,
+                              isMain: true,
+                            ),
+                          ],
                         ),
                       ),
                     ),
