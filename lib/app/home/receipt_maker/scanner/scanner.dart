@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cashier/app/home/models/receipt.dart';
 import 'package:cashier/app/home/models/scanner.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,16 @@ class Scanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MobileScanner(
       controller: ref.watch(scannerControllerProvider),
-      onDetect: (capture) {
+      onDetect: (capture) async {
         final List<Barcode> barcodes = capture.barcodes;
         if (barcodes.isEmpty) return;
         log(barcodes.first.displayValue!, name: "Barcode");
+
+        await player.play(AssetSource('sounds/beep.mp3'));
         ref.read(productsProvider.notifier).add(barcodes.first.displayValue!);
       },
     );
   }
 }
+
+final player = AudioPlayer();

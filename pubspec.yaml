@@ -12,7 +12,10 @@ dependencies:
   flutter_riverpod: ^2.3.6
   sliding_up_panel: ^2.0.0+1
   mobile_scanner: ^3.3.0
-  http: ^1.1.0
+  http: ^0.13.5
+  flutter_spinbox: ^0.13.1
+  shared_preferences: ^2.2.0
+  audioplayers: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +25,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/sounds/
