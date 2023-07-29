@@ -6,7 +6,8 @@ class Receipt {
   final List<Product> products;
   final double total;
 
-  Receipt({required this.createdOn, required this.products, required this.total});
+  Receipt(
+      {required this.createdOn, required this.products, required this.total});
 }
 
 class ProductsNotifier extends Notifier<List<Receipt>> {
@@ -16,7 +17,7 @@ class ProductsNotifier extends Notifier<List<Receipt>> {
   }
 
   void add(Receipt receipt) {
-    state = [...state, receipt];
+    state = [receipt, ...state];
   }
 }
 

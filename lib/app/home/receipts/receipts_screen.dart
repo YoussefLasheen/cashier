@@ -1,6 +1,7 @@
 import 'package:cashier/app/home/receipt_maker/receipt_maker_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../models/receipts.dart';
 import 'widgets/receipt_screen.dart';
@@ -34,9 +35,13 @@ class ReceiptsScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final receipt = receipts[index];
                 return ListTile(
-                  title: Text(receipt.createdOn.toString()),
-                  subtitle: Text(receipt.products.length.toString()),
-                  trailing: Text(receipt.total.toString() + 'EGP'),
+                  title: Text(DateFormat('E, d MMM yyyy h:mm a')
+                      .format(receipt.createdOn)),
+                  trailing: Text(
+                    '${receipt.total.toStringAsFixed(2)}EGP',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w300),
+                  ),
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
